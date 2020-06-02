@@ -192,7 +192,7 @@ function addButtonListener() {
       document.querySelector('button').innerHTML='Start';
     }
     else {
-      timerID=setInterval(drawNumber, 3000);
+      timerID=setInterval(drawNumber, 300);
       document.querySelector('button').innerHTML='Stop';
     }
   })
@@ -235,10 +235,10 @@ function shuffleArray(arr,trim=0,sort='') {
 
 // Draws a random bingo number
 function drawNumber() {
-  numBase[drawNumbers[called]].classList.add('new-number');
+  numBase[drawNumbers[called]-1].classList.add('new-number');
   if(called!=0) {
-    numBase[drawNumbers[called-1]].classList.remove('new-number');
-    numBase[drawNumbers[called-1]].classList.add('called-number');
+    numBase[drawNumbers[called-1]-1].classList.remove('new-number');
+    numBase[drawNumbers[called-1]-1].classList.add('called-number');
   }
 
   if(called<74) {
