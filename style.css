@@ -4,16 +4,21 @@
   font-size: 12px;
 }
 
- body {
+body {
    background-color: steelblue;
    font-family: 'Roboto', sans-serif;
- }
+}
+
+button {
+  margin-bottom: 2rem;
+  margin-left:3rem;
+  width: 8rem;
+  height: 2rem;
+}
 
 #card-wrap {
-  margin-left: auto;
-  margin-right: auto;
-  display:block;
-  width: 25rem;
+  width:25rem;
+  margin: 0 auto 0 auto;
 }
 
 #card-header {
@@ -33,7 +38,6 @@
   text-align: center;
 }
 
-
 #card {
   display:flex;
   flex-wrap:wrap;
@@ -48,7 +52,6 @@
   font-weight:bold;
   text-align:center;
   padding-top:2rem;
-
 }
 
 #card div.free-space {
@@ -61,4 +64,53 @@
 
 .card-click {
   background-color:violet;
+}
+
+
+#numbers-wrap {
+  display:flex;
+  width:24rem;
+  margin: 3rem auto 0 auto;
+}
+
+#numbers {
+  display:flex;
+  flex-wrap:wrap;
+  background-color:black;
+  width:22.5rem;
+  color:darkslategrey;
+  margin-bottom: 2rem;
+}
+
+#numbers div {
+  width:1.5rem;
+  height:1.5rem;
+  font-size:1rem;
+  font-weight:bold;
+  text-align:center;
+}
+
+#number-header {
+  width:1.5rem;
+  height:7.5rem;
+  background-color:black;
+  display: flex;
+  flex-direction: column;
+}
+
+#number-header div {
+  width: 1.5rem;
+  height: 1.5rem;
+  font-size: 1rem;
+  font-weight: bold;
+  text-align: center;
+  color: lemonchiffon;
+}
+
+.called-number {
+  color:lemonchiffon;
+}
+
+.new-number {
+  color:orange;
 }
