@@ -1,0 +1,64 @@
+* {
+  margin: 0;
+  padding: 0;
+  font-size: 12px;
+}
+
+ body {
+   background-color: steelblue;
+   font-family: 'Roboto', sans-serif;
+ }
+
+#card-wrap {
+  margin-left: auto;
+  margin-right: auto;
+  display:block;
+  width: 25rem;
+}
+
+#card-header {
+  width:25rem;
+  height:3rem;
+  background-color:firebrick;
+  border-bottom: 2px black solid;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+#card-header div {
+  width: 5rem;
+  height: 3rem;
+  font-size: 2rem;
+  font-weight: bold;
+  text-align: center;
+}
+
+
+#card {
+  display:flex;
+  flex-wrap:wrap;
+  background-color:peru;
+  width:25rem;
+}
+
+#card div {
+  width:5rem;
+  height:4rem;
+  font-size:2rem;
+  font-weight:bold;
+  text-align:center;
+  padding-top:2rem;
+
+}
+
+#card div.free-space {
+  font-size:1rem;
+}
+
+.card-hover {
+  background-color:linen;
+}
+
+.card-click {
+  background-color:violet;
+}
