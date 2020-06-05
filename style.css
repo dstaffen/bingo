@@ -1,3 +1,9 @@
+/*
+///////////////
+// HTML Tags //
+///////////////
+*/
+
 * {
   margin: 0;
   padding: 0;
@@ -10,84 +16,108 @@ body {
 }
 
 button {
-  margin-bottom: 2rem;
-  margin-left:3rem;
   width: 8rem;
   height: 2rem;
 }
 
-#card-wrap {
-  width:25rem;
-  margin: 0 auto 0 auto;
+
+#container {
+  display:flex;
+  flex-direction: row;
+  align-items: stretch;
+  justify-content: space-evenly;
+  width: 100vw;
+  height:100vh;
 }
 
-#card-header {
-  width:25rem;
-  height:3rem;
-  background-color:firebrick;
-  border-bottom: 2px black solid;
+
+/*
+////////////////////
+// Left Container //
+////////////////////
+*/
+
+#left-container {
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
 }
 
-#card-header div {
-  width: 5rem;
-  height: 3rem;
+#logo {
+  width: 15rem;
+  height: 7.5rem;
   font-size: 2rem;
-  font-weight: bold;
-  text-align: center;
+  text-align:center;
 }
 
-#card {
+#current-number-wrap {
+  width: 10rem;
+}
+
+#numbers-drawn {
+  width: 100%;
+  height: 1rem;
+  font-weight: bold;
+  color: black;
+  text-align: center;
+  margin-bottom: .5rem;
+}
+
+#current-number {
+  width: 100%;
+  height: 7.75rem;
+  font-size: 4rem;
+  text-align:center;
+  font-weight: bold;
+  color: black;
+  background-color: peru;
+  padding-top: 2.25rem;
+  border: 2px black solid
+}
+
+#game-wrap {
+  width: 10rem;
+  height: 10rem;
+  background-color: ivory;
+  border: 2px black solid;
+}
+
+#game {
   display:flex;
   flex-wrap:wrap;
-  background-color:peru;
-  width:25rem;
+  width:10rem;
 }
 
-#card div {
-  width:5rem;
-  height:4rem;
-  font-size:2rem;
-  font-weight:bold;
-  text-align:center;
-  padding-top:2rem;
+#game div {
+  width:2rem;
+  height:2rem;
 }
 
-#card div.free-space {
-  font-size:1rem;
+#score {
+  width: 15rem;
+  height: 2rem;
+  background-color: tan;
 }
 
-.card-hover {
-  background-color:linen;
-}
+/*
+//////////////////////
+// Center Container //
+//////////////////////
+*/
 
-.card-click {
-  background-color:violet;
+#center-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
 }
-
 
 #numbers-wrap {
   display:flex;
-  width:24rem;
-  margin: 3rem auto 0 auto;
-}
-
-#numbers {
-  display:flex;
-  flex-wrap:wrap;
-  background-color:black;
-  width:22.5rem;
-  color:darkslategrey;
-  margin-bottom: 2rem;
-}
-
-#numbers div {
-  width:1.5rem;
-  height:1.5rem;
-  font-size:1rem;
-  font-weight:bold;
-  text-align:center;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width:100%;
 }
 
 #number-header {
@@ -105,6 +135,167 @@ button {
   font-weight: bold;
   text-align: center;
   color: lemonchiffon;
+}
+
+#numbers {
+  display:flex;
+  flex-wrap:wrap;
+  background-color:black;
+  width:22.5rem;
+  color:darkslategrey;
+}
+
+#numbers div {
+  width:1.5rem;
+  height:1.5rem;
+  font-size:1rem;
+  font-weight:bold;
+  text-align:center;
+}
+
+#button-wrap {
+  display:flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+  width:100%;
+}
+
+
+#card-wrap {
+  border: 2px solid black;
+}
+
+#card-header {
+  height:3rem;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+#card-header div {
+  width: 5rem;
+  height: 3rem;
+  font-size: 2rem;
+  font-weight: bold;
+  text-align: center;
+}
+
+#card {
+  width: 25rem;
+}
+
+#card div {
+  width:5rem;
+  height:3.75rem;
+  font-size:2rem;
+  font-weight:bold;
+  text-align:center;
+  padding-top:1.25rem;
+}
+
+
+/*
+/////////////////////
+// Right Container //
+/////////////////////
+*/
+
+#right-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+
+#opponent1-wrap {
+  border: 2px solid black;
+}
+
+#opponent1-header {
+  height:1.5rem;
+  text-align: center;
+}
+
+#opponent1-card {
+  width: 7.5rem;
+}
+
+#opponent1-card div {
+  width:1.5rem;
+  height:1.5rem;
+  font-size:1rem;
+  font-weight:bold;
+  text-align:center;
+}
+
+#opponent2-wrap {
+  border: 2px solid black;
+}
+
+#opponent2-header {
+  height:1.5rem;
+  text-align: center;
+}
+
+#opponent2-card {
+  width: 7.5rem;
+}
+
+#opponent2-card div {
+  width:1.5rem;
+  height:1.5rem;
+  font-size:1rem;
+  font-weight:bold;
+  text-align:center;
+}
+
+#opponent3-wrap {
+  border: 2px solid black;
+}
+
+#opponent3-header {
+  height:1.5rem;
+  text-align: center;
+}
+
+#opponent3-card {
+  width: 7.5rem;
+}
+
+#opponent3-card div {
+  width:1.5rem;
+  height:1.5rem;
+  font-size:1rem;
+  font-weight:bold;
+  text-align:center;
+}
+
+
+/*
+/////////////
+// Classes //
+/////////////
+*/
+
+.card-header-class {
+  background-color:firebrick;
+  border-bottom: 2px black solid;
+}
+
+.card-class {
+  display:flex;
+  flex-wrap:wrap;
+  background-color:peru;
+}
+
+.free-space {
+}
+
+.card-hover {
+  background-color:linen;
+}
+
+.card-click {
+  background-color:violet;
 }
 
 .called-number {
