@@ -148,8 +148,30 @@ document.addEventListener('DOMContentLoaded', () => {
      0,1,0,1,0,
      1,0,1,0,1]
   ];
+  let lGame = [
+    [1,0,0,0,0,
+     1,0,0,0,0,
+     1,0,0,0,0,
+     1,0,0,0,0,
+     1,1,1,1,1],
+    [1,1,1,1,1,
+     1,0,0,0,0,
+     1,0,0,0,0,
+     1,0,0,0,0,
+     1,0,0,0,0],
+    [1,1,1,1,1,
+     0,0,0,0,1,
+     0,0,0,0,1,
+     0,0,0,0,1,
+     0,0,0,0,1],
+    [0,0,0,0,1,
+     0,0,0,0,1,
+     0,0,0,0,1,
+     0,0,0,0,1,
+     1,1,1,1,1]
+  ];
 
-  let games = [lineGame,tGame,xGame,bigBoxGame,smallBoxGame,blackoutGame,checkerboardGame];
+  let games = [lineGame,tGame,xGame,bigBoxGame,smallBoxGame,blackoutGame,checkerboardGame,lGame];
 
 
   // Loads divs into the page if they don't already exist
