@@ -16,6 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Declare variables
   let calledNum=0;
+  let checkCalledNum;
   let gameCounter=0;
   let time=5000;
   let timerID;
@@ -242,278 +243,335 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
-////////////////////
-// Main Functions //
-////////////////////
+  ////////////////////
+  // Main Functions //
+  ////////////////////
 
-// Loads divs into card if divs don't already exist
-// selector=the CSS selector to target
-// num=the number of divs to create
-function loadDivs(selector,num,free=0) {
-  const card=document.querySelector(selector);
-  let cardGrid=Array.from(document.querySelectorAll(selector+' div'));
+  // Loads divs into card if divs don't already exist
+  // selector=the CSS selector to target
+  // num=the number of divs to create
+  function loadDivs(selector,num,free=0) {
+    const card=document.querySelector(selector);
+    let cardGrid=Array.from(document.querySelectorAll(selector+' div'));
 
-  if(cardGrid.length == 0) {
-    for(let i=0;i<num;i++) {
+    if(cardGrid.length == 0) {
+      for(let i=0;i<num;i++) {
 
-      if(i==free && i!=0) {
-        card.innerHTML+='<div class=\"free-space\">FS</div>\n';
-      }
-      else {
-        card.innerHTML+='<div></div>\n';
-      }
-    }
-  }
-}
-
-
-// Returns card divs as array
-function getCardDivs(selector) {
-  return document.querySelectorAll(selector+' div');
-}
-
-
-// Populates an array of an array of numbers in groups of 15
-// max = largest number in array
-// group = number of groups required
-function populateNumbers(max,group) {
-  let num=[];
-  let a=[];
-  let increase=Math.floor(max/group);
-
-  for(let x=0;x<max;x+=increase) {
-    a=[];
-    for(let y=1;y<=increase;y++) {
-      a.push(x+y);
-    }
-    num.push(a);
-  }
-
-  if(num.length==1){
-    return a;
-  }
-  else {
-    return num;
-  }
-}
-
-
-// Generate set of bingo card numbers
-// a = two-dimensional array
-function generateCardNumbers(a) {
-  let newNum=[];
-
-  for(let i=0;i<a.length;i++) {
-    newNum.push(shuffleArray(a[i],5,'sort'));
-  }
-  return newNum;
-}
-
-
-// Display card numbers
-// c=array of array of numbers
-// g=grid of HTML objects
-// d=direction (down or across)
-function fillGrid(c,g,d) {
-  if(d=='down') {
-    for(let x=0;x<c.length;x++) {
-      for(let y=0;y<c[x].length;y++) {
-        if(g[x+(y*c[x].length)].innerHTML!='FS') {
-          g[x+(y*c[x].length)].innerHTML=c[x][y];
+        if(i==free && i!=0) {
+          card.innerHTML+='<div class=\"free-space\">FS</div>\n';
+        }
+        else {
+          card.innerHTML+='<div></div>\n';
         }
       }
     }
   }
-  else {
-    for(let x=0;x<c.length;x++) {
-      for(let y=0;y<c[x].length;y++) {
-        if(g[(x*c[x].length)+y].innerHTML!='FS') {
-          g[(x*c[x].length)+y].innerHTML=c[x][y];
+
+
+  // Returns card divs as array
+  function getCardDivs(selector) {
+    return document.querySelectorAll(selector+' div');
+  }
+
+
+  // Populates an array of an array of numbers in groups of 15
+  // max = largest number in array
+  // group = number of groups required
+  function populateNumbers(max,group) {
+    let num=[];
+    let a=[];
+    let increase=Math.floor(max/group);
+
+    for(let x=0;x<max;x+=increase) {
+      a=[];
+      for(let y=1;y<=increase;y++) {
+        a.push(x+y);
+      }
+      num.push(a);
+    }
+
+    if(num.length==1){
+      return a;
+    }
+    else {
+      return num;
+    }
+  }
+
+
+  // Generate set of bingo card numbers
+  // a = two-dimensional array
+  function generateCardNumbers(a) {
+    let newNum=[];
+
+    for(let i=0;i<a.length;i++) {
+      newNum.push(shuffleArray(a[i],5,'sort'));
+    }
+    return newNum;
+  }
+
+
+  // Display card numbers
+  // c=array of array of numbers
+  // g=grid of HTML objects
+  // d=direction (down or across)
+  function fillGrid(c,g,d) {
+    if(d=='down') {
+      for(let x=0;x<c.length;x++) {
+        for(let y=0;y<c[x].length;y++) {
+          if(g[x+(y*c[x].length)].innerHTML!='FS') {
+            g[x+(y*c[x].length)].innerHTML=c[x][y];
+          }
+        }
+      }
+    }
+    else {
+      for(let x=0;x<c.length;x++) {
+        for(let y=0;y<c[x].length;y++) {
+          if(g[(x*c[x].length)+y].innerHTML!='FS') {
+            g[(x*c[x].length)+y].innerHTML=c[x][y];
+          }
         }
       }
     }
   }
-}
 
 
-function selectGame() {
-  currentGame=games[Math.floor(Math.random()*games.length)];
-}
-
-
-// Add event listeners
-function addListeners(g) {
-  for(let i=0;i<g.length;i++) {
-    g[i].addEventListener('click',(e) => {
-      if(e.target.classList.contains('card-click')) {
-        e.target.classList.remove('card-click');
-      }
-      else {
-        e.target.classList.add('card-click');
-      }
-    });
-    g[i].addEventListener('mouseover',(e) => {
-      if(!e.target.classList.contains('card-click')) {
-        e.target.classList.add('card-hover');
-      }
-    });
-    g[i].addEventListener('mouseout',(e) => {
-      if(!e.target.classList.contains('card-click')) {
-        e.target.classList.remove('card-hover');
-      }
-    });
+  function selectGame() {
+    currentGame=games[Math.floor(Math.random()*games.length)];
   }
 
-}
+
+  // Add event listeners
+  function addListeners(g) {
+    for(let i=0;i<g.length;i++) {
+      g[i].addEventListener('click',(e) => {
+        if(e.target.classList.contains('card-click')) {
+          e.target.classList.remove('card-click');
+        }
+        else {
+          e.target.classList.add('card-click');
+        }
+      });
+      g[i].addEventListener('mouseover',(e) => {
+        if(!e.target.classList.contains('card-click')) {
+          e.target.classList.add('card-hover');
+        }
+      });
+      g[i].addEventListener('mouseout',(e) => {
+        if(!e.target.classList.contains('card-click')) {
+          e.target.classList.remove('card-hover');
+        }
+      });
+    }
+
+  }
 
 
 
 
 
 
-// Add event listener to button
-function addButtonListener() {
-  btn.addEventListener('click',()=>{
-    if(timerID) {
+  // Add event listener to button
+  function addButtonListener() {
+    btn.addEventListener('click',()=>{
+      if(timerID) {
+        clearInterval(timerID);
+        clearInterval(gameTimerID);
+        timerID=null;
+        gameTimerID=null;
+        document.querySelector('button').innerHTML='Start';
+      }
+      else {
+        drawNumber();
+        displayGame();
+        timerID=setInterval(drawNumber,time);
+        gameTimerID=setInterval(displayGame,2000);
+        document.querySelector('button').innerHTML='Stop';
+      }
+    })
+  }
+
+
+  function checkForWin(selector) {
+    let g = document.querySelectorAll(selector+' div');
+    let ga = Array.from(g);
+    checkCalledNum=drawNumbers.slice(0,calledNum+1).map(e => e.toString());
+    checkCalledNum.unshift('FS');
+    let winningCondition = [];
+
+    // The first thing we want to do is to check that winning conditions exist:
+    // that is, every number represented by a 1 in the game board has been called.
+    // Next, we check to see that all tiles are covered.
+    // If both these conditions are met, you have a bingo!
+    currentGame.forEach((x,i) => {
+      winningCondition.push(ga.filter((y,j) => currentGame[i][j]==1).every(e => checkCalledNum.includes(e.innerHTML) && e.classList.contains('card-click')));
+    });
+
+    return winningCondition;
+  }
+
+
+
+  ///////////////////////
+  // Utility Functions //
+  ///////////////////////
+
+  // Shuffles an array
+  // arr=array to be shuffled
+  // trim=trim array to specified number of elements (defaults to zero)
+  function shuffleArray(arr,trim=0,sort='') {
+    let j;
+    let temp;
+
+    for(let i=arr.length-1;i>0;i--) {
+      j=Math.floor(Math.random()*(i+1));
+      temp=arr[i];
+      arr[i]=arr[j];
+      arr[j]=temp;
+    }
+
+    if(trim<0) {
+      trim=0;
+    }
+    else if(trim>arr.length) {
+      trim=arr.length;
+    }
+
+    if(trim>0) {
+      arr=arr.slice(0,trim);
+    }
+
+    if(sort=='sort') {
+      arr.sort((a,b) => {return a-b})
+    }
+
+    return arr;
+  }
+
+
+  // Draws a random bingo number
+  function drawNumber() {
+
+    // calledNum is a counter. drawNumbers is the shuffled list of numbers from 1-75.
+    // numGrid is the 0-based array of HTML object sin the called number display.
+    // drawNumbers[calledNum] will return a number from 1-75. We need to subtract 1
+    // in order to get the index in a 0-based array.
+
+    let match;
+    let currentNum = drawNumbers[calledNum];
+    let currentNumIndex = drawNumbers[calledNum]-1;
+    let previousNum = drawNumbers[calledNum-1*(calledNum>0)];
+    let previousNumIndex = drawNumbers[calledNum-1*(calledNum>0)]-1;
+
+    // Mark the free space
+    cardGrid[Array.from(cardGrid).findIndex(e => e.innerHTML=='FS')].classList.add('card-click');
+    opponent1Grid[Array.from(opponent1Grid).findIndex(e => e.innerHTML=='FS')].classList.add('card-click');
+    opponent2Grid[Array.from(opponent2Grid).findIndex(e => e.innerHTML=='FS')].classList.add('card-click');
+    opponent3Grid[Array.from(opponent3Grid).findIndex(e => e.innerHTML=='FS')].classList.add('card-click');
+
+    // Display the newly drawn number in the called number display
+    // as soon as the start button is clicked
+    // This is a one-time action
+    numGrid[currentNumIndex].classList.add('new-number');
+
+    document.querySelector('#current-number').innerHTML=bingo[Math.floor((currentNum-1)/15)]+' '+currentNum;
+    document.querySelector('#numbers-drawn').innerHTML='Ball Number: '+(calledNum+1);
+
+    // Change the state of the previously called number
+    if(calledNum!=0) {
+
+      // Take these actions on the previous index
+      numGrid[previousNumIndex].classList.remove('new-number');
+      numGrid[previousNumIndex].classList.add('called-number');
+    }
+
+//    match=Array.from(cardGrid).findIndex(e => e.innerHTML==drawNumbers[calledNum]);
+//    if(match>=0) {
+//      cardGrid[match].classList.add('card-click');
+//    }
+
+    // Mark the called number on the opponent cards if the number exists
+    match=Array.from(opponent1Grid).findIndex(e => e.innerHTML==drawNumbers[calledNum]);
+    if(match>=0) {
+      opponent1Grid[match].classList.add('card-click');
+    }
+    match=Array.from(opponent2Grid).findIndex(e => e.innerHTML==drawNumbers[calledNum]);
+    if(match>=0) {
+      opponent2Grid[match].classList.add('card-click');
+    }
+    match=Array.from(opponent3Grid).findIndex(e => e.innerHTML==drawNumbers[calledNum]);
+    if(match>=0) {
+      opponent3Grid[match].classList.add('card-click');
+    }
+
+    if(checkForWin('#card').find(e => e==true)) {
+      clearInterval(timerID);
+      clearInterval(gameTimerID);
+      timerID=null;
+      gameTimerID=null;
+      document.querySelector('button').innerHTML='Start';
+
+      document.querySelector('#score').innerHTML="You Win";
+    }
+    else if(checkForWin('#opponent1-card').find(e => e==true)) {
+      clearInterval(timerID);
+      clearInterval(gameTimerID);
+      timerID=null;
+      gameTimerID=null;
+      document.querySelector('button').innerHTML='Start';
+
+      document.querySelector('#score').innerHTML=opponentNames[0]+' Wins';
+    }
+    else if(checkForWin('#opponent2-card').find(e => e==true)) {
+      clearInterval(timerID);
+      clearInterval(gameTimerID);
+      timerID=null;
+      gameTimerID=null;
+      document.querySelector('button').innerHTML='Start';
+
+      document.querySelector('#score').innerHTML=opponentNames[1]+' Wins';
+    }
+    else if(checkForWin('#opponent3-card').find(e => e==true)) {
+      clearInterval(timerID);
+      clearInterval(gameTimerID);
+      timerID=null;
+      gameTimerID=null;
+      document.querySelector('button').innerHTML='Start';
+
+      document.querySelector('#score').innerHTML=opponentNames[2]+' Wins';
+    }
+
+    // increase the counter if there are still numbers to draw
+    if(calledNum<74) {
+      calledNum++;
+    }
+    else {
       clearInterval(timerID);
       clearInterval(gameTimerID);
       timerID=null;
       gameTimerID=null;
       document.querySelector('button').innerHTML='Start';
     }
+  }
+
+  function displayGame() {
+  //  gameGrid.forEach(e => e.classList.remove('card-click'));
+
+    for(let i=0;i<gameGrid.length;i++) {
+      gameGrid[i].classList.remove('card-click');
+      if(currentGame[gameCounter][i]==1) {
+        gameGrid[i].classList.add('card-click');
+      }
+    }
+
+    if(gameCounter<currentGame.length-1) {
+      gameCounter++;
+    }
     else {
-      drawNumber();
-      displayGame();
-      timerID=setInterval(drawNumber,time);
-      gameTimerID=setInterval(displayGame,2000);
-      document.querySelector('button').innerHTML='Stop';
-    }
-  })
-}
-
-
-///////////////////////
-// Utility Functions //
-///////////////////////
-
-// Shuffles an array
-// arr=array to be shuffled
-// trim=trim array to specified number of elements (defaults to zero)
-function shuffleArray(arr,trim=0,sort='') {
-  let j;
-  let temp;
-
-  for(let i=arr.length-1;i>0;i--) {
-    j=Math.floor(Math.random()*(i+1));
-    temp=arr[i];
-    arr[i]=arr[j];
-    arr[j]=temp;
-  }
-
-  if(trim<0) {
-    trim=0;
-  }
-  else if(trim>arr.length) {
-    trim=arr.length;
-  }
-
-  if(trim>0) {
-    arr=arr.slice(0,trim);
-  }
-
-  if(sort=='sort') {
-    arr.sort((a,b) => {return a-b})
-  }
-
-  return arr;
-}
-
-
-// Draws a random bingo number
-function drawNumber() {
-
-  // calledNum is a counter. drawNumbers is the shuffled list of numbers from 1-75.
-  // numGrid is the 0-based array of HTML object sin the called number display.
-  // drawNumbers[calledNum] will return a number from 1-75. We need to subtract 1
-  // in order to get the index in a 0-based array.
-
-  let match;
-  let currentNum = drawNumbers[calledNum];
-  let currentNumIndex = drawNumbers[calledNum]-1;
-  let previousNum = drawNumbers[calledNum-1*(calledNum>0)];
-  let previousNumIndex = drawNumbers[calledNum-1*(calledNum>0)]-1;
-
-  // Mark the free space
-  cardGrid[Array.from(cardGrid).findIndex(e => e.innerHTML=='FS')].classList.add('card-click');
-  opponent1Grid[Array.from(opponent1Grid).findIndex(e => e.innerHTML=='FS')].classList.add('card-click');
-  opponent2Grid[Array.from(opponent2Grid).findIndex(e => e.innerHTML=='FS')].classList.add('card-click');
-  opponent3Grid[Array.from(opponent3Grid).findIndex(e => e.innerHTML=='FS')].classList.add('card-click');
-
-  // Display the newly drawn number in the called number display
-  // as soon as the start button is clicked
-  // This is a one-time action
-  numGrid[currentNumIndex].classList.add('new-number');
-
-  document.querySelector('#current-number').innerHTML=bingo[Math.floor(currentNum/16)]+' '+currentNum;
-  document.querySelector('#numbers-drawn').innerHTML='Ball Number: '+(calledNum+1);
-
-  // Change the state of the previously called number
-  if(calledNum!=0) {
-
-    // Take these actions on the previous index
-    numGrid[previousNumIndex].classList.remove('new-number');
-    numGrid[previousNumIndex].classList.add('called-number');
-  }
-
-  match=Array.from(cardGrid).findIndex(e => e.innerHTML==drawNumbers[calledNum]);
-  if(match>=0) {
-    cardGrid[match].classList.add('card-click');
-  }
-
-  // Mark the called number on the opponent cards if the number exists
-  match=Array.from(opponent1Grid).findIndex(e => e.innerHTML==drawNumbers[calledNum]);
-  if(match>=0) {
-    opponent1Grid[match].classList.add('card-click');
-  }
-  match=Array.from(opponent2Grid).findIndex(e => e.innerHTML==drawNumbers[calledNum]);
-  if(match>=0) {
-    opponent2Grid[match].classList.add('card-click');
-  }
-  match=Array.from(opponent3Grid).findIndex(e => e.innerHTML==drawNumbers[calledNum]);
-  if(match>=0) {
-    opponent3Grid[match].classList.add('card-click');
-  }
-
-  // increase the counter if there are still numbers to draw
-  if(calledNum<74) {
-    calledNum++;
-  }
-  else {
-    clearInterval(timerID);
-    clearInterval(gameTimerID);
-    timerID=null;
-    gameTimerID=null;
-    document.querySelector('button').innerHTML='Start';
-  }
-}
-
-function displayGame() {
-//  gameGrid.forEach(e => e.classList.remove('card-click'));
-
-  for(let i=0;i<gameGrid.length;i++) {
-    gameGrid[i].classList.remove('card-click');
-    if(currentGame[gameCounter][i]==1) {
-      gameGrid[i].classList.add('card-click');
+      gameCounter=0;
     }
   }
-
-  if(gameCounter<currentGame.length-1) {
-    gameCounter++;
-  }
-  else {
-    gameCounter=0;
-  }
-}
 
 
 

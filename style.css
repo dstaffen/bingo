@@ -26,8 +26,9 @@ button {
   flex-direction: row;
   align-items: stretch;
   justify-content: space-evenly;
-  width: 100vw;
+  width: 75rem;
   height:100vh;
+  margin: 0 auto 0 auto;
 }
 
 
@@ -213,10 +214,13 @@ button {
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
+  align-items: center;
+  width: 15rem;
 }
 
 #opponent1-wrap {
   border: 2px solid black;
+  width: 10rem;
 }
 
 #opponent1-header {
@@ -243,6 +247,7 @@ button {
 
 #opponent2-wrap {
   border: 2px solid black;
+  width: 10rem;
 }
 
 #opponent2-header {
@@ -269,6 +274,7 @@ button {
 
 #opponent3-wrap {
   border: 2px solid black;
+  width: 10rem;
 }
 
 #opponent3-header {
